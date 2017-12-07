@@ -20,6 +20,9 @@ public class TasksActivity extends DaggerAppCompatActivity {
     @Inject
     TasksFragment mTasksFragment;
 
+    @Inject
+    TasksPresenter mTasksPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,9 +39,13 @@ public class TasksActivity extends DaggerAppCompatActivity {
             transaction.add(R.id.contentFrame, tasksFragment);
             transaction.commit();
         }
-        TasksPresenter tasksPresenter = new TasksPresenter();
-        tasksPresenter.setTaskDataSource(TaskRepository.getInstance());
-        tasksFragment.setPresenter(tasksPresenter);
+//        TasksPresenter tasksPresenter = new TasksPresenter();
+//        tasksPresenter.setTaskDataSource(TaskRepository.getInstance());
+//        tasksFragment.setPresenter(tasksPresenter);
+
+
+        mTasksPresenter.setTaskDataSource(TaskRepository.getInstance());
+        tasksFragment.setPresenter(mTasksPresenter);
 
         //present创建
 //        new TasksPresenter(TaskRepository.getInstance(), tasksFragment);

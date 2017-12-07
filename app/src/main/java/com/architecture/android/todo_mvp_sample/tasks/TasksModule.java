@@ -11,4 +11,7 @@ public abstract class TasksModule {
 
     @ContributesAndroidInjector
     abstract TasksFragment tasksFragment();
+
+//    @ContributesAndroidInjector
+//    abstract TasksPresenter tasksPresenter();
 }

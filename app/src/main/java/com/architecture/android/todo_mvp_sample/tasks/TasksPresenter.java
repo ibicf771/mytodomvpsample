@@ -7,6 +7,8 @@ import com.architecture.android.todo_mvp_sample.data.source.TaskRepository;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by yangsimin on 2017/11/29.
  */
@@ -21,16 +23,12 @@ public class TasksPresenter implements TasksContract.Presenter, TaskRepository.G
 //        view.setPresenter(this);
     }
 
+    @Inject
     public TasksPresenter(){
-//        mTaskDataSource = taskDataSource;
-//        mView = view;
-//        view.setPresenter(this);
     }
 
     public TasksPresenter(TaskDataSource taskDataSource){
         mTaskDataSource = taskDataSource;
-//        mView = view;
-//        view.setPresenter(this);
     }
 
     public void setTaskDataSource(TaskDataSource taskDataSource){
