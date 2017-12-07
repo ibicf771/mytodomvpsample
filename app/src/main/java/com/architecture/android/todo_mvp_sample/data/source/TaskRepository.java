@@ -5,6 +5,8 @@ import com.architecture.android.todo_mvp_sample.data.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 /**
  * Created by yangsimin on 2017/11/29.
  */
@@ -13,7 +15,9 @@ public class TaskRepository implements TaskDataSource {
 
     private static TaskRepository instance;
 
-    private TaskRepository() {
+
+    @Inject
+    public TaskRepository() {
     }
 
     public static TaskRepository getInstance() {

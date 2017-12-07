@@ -19,18 +19,24 @@ import com.architecture.android.todo_mvp_sample.data.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerFragment;
+
+
 /**
  * Created by yangsimin on 2017/11/29.
  */
 
-public class TasksFragment extends Fragment implements TasksContract.View{
+public class TasksFragment extends DaggerFragment implements TasksContract.View{
 
     private TasksContract.Presenter mPresenter;
     private Button mAddItemBtn;
     private RecyclerView mRecycleView;
     private TasksAdapter mAdapter;
 
-    private TasksFragment() {
+    @Inject
+    public TasksFragment() {
         // Requires empty public constructor
     }
 

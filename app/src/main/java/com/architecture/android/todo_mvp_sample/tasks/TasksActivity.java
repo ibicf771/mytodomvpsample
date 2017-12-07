@@ -11,7 +11,14 @@ import android.util.Log;
 import com.architecture.android.todo_mvp_sample.R;
 import com.architecture.android.todo_mvp_sample.data.source.TaskRepository;
 
-public class TasksActivity extends AppCompatActivity {
+import javax.inject.Inject;
+
+import dagger.android.support.DaggerAppCompatActivity;
+
+public class TasksActivity extends DaggerAppCompatActivity {
+
+    @Inject
+    TasksFragment mTasksFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +29,8 @@ public class TasksActivity extends AppCompatActivity {
                 (TasksFragment) getSupportFragmentManager().findFragmentById(R.id.contentFrame);
         if (tasksFragment == null) {
             // Create the fragment
-            tasksFragment = TasksFragment.newInstance();
+//            tasksFragment = TasksFragment.newInstance();
+            tasksFragment = mTasksFragment;
 
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.contentFrame, tasksFragment);
