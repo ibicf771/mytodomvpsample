@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.architecture.android.todo_mvp_sample.R;
 import com.architecture.android.todo_mvp_sample.data.source.TaskRepository;
@@ -28,6 +29,7 @@ public class TasksActivity extends AppCompatActivity {
             transaction.commit();
         }
 
+        //present创建
         new TasksPresenter(TaskRepository.getInstance(), tasksFragment);
 
     }
