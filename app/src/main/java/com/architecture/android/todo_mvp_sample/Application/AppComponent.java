@@ -5,6 +5,7 @@ import javax.inject.Singleton;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 import dagger.android.support.AndroidSupportInjectionModule;
+import com.architecture.android.todo_mvp_sample.data.source.TaskRepository;
 
 /**
  * Created by yangsimin on 2017/12/6.
@@ -19,5 +20,6 @@ interface AppComponent extends AndroidInjector<TasksApplication>{
 
     @Component.Builder
     abstract class Builder extends AndroidInjector.Builder<TasksApplication> {}
+
 
 }

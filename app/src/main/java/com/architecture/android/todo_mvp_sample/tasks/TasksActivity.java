@@ -23,6 +23,9 @@ public class TasksActivity extends DaggerAppCompatActivity {
     @Inject
     TasksPresenter mTasksPresenter;
 
+    @Inject
+    TaskRepository mTaskRepository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +47,7 @@ public class TasksActivity extends DaggerAppCompatActivity {
 //        tasksFragment.setPresenter(tasksPresenter);
 
 
-        mTasksPresenter.setTaskDataSource(TaskRepository.getInstance());
+        mTasksPresenter.setTaskDataSource(mTaskRepository);
         tasksFragment.setPresenter(mTasksPresenter);
 
         //present创建

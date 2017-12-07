@@ -27,6 +27,7 @@ public class TasksPresenter implements TasksContract.Presenter, TaskRepository.G
     public TasksPresenter(){
     }
 
+
     public TasksPresenter(TaskDataSource taskDataSource){
         mTaskDataSource = taskDataSource;
     }

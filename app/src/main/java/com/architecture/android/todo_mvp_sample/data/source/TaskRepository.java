@@ -6,11 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.inject.Singleton;
 
 /**
  * Created by yangsimin on 2017/11/29.
  */
 
+@Singleton
 public class TaskRepository implements TaskDataSource {
 
     private static TaskRepository instance;
