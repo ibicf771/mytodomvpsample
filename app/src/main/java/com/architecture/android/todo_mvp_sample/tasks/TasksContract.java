@@ -24,5 +24,7 @@ public class TasksContract {
         void addItem();
 
         void deleteItem(Task task);
+
+        void setView(View view);
     }
 }

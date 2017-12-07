@@ -36,9 +36,12 @@ public class TasksActivity extends DaggerAppCompatActivity {
             transaction.add(R.id.contentFrame, tasksFragment);
             transaction.commit();
         }
+        TasksPresenter tasksPresenter = new TasksPresenter();
+        tasksPresenter.setTaskDataSource(TaskRepository.getInstance());
+        tasksFragment.setPresenter(tasksPresenter);
 
         //present创建
-        new TasksPresenter(TaskRepository.getInstance(), tasksFragment);
+//        new TasksPresenter(TaskRepository.getInstance(), tasksFragment);
 
     }
 }

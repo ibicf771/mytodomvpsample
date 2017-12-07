@@ -44,9 +44,9 @@ public class TasksFragment extends DaggerFragment implements TasksContract.View{
         return new TasksFragment();
     }
 
-    @Override
     public void setPresenter(TasksContract.Presenter presenter) {
         mPresenter = presenter;
+        mPresenter.setView(this);
     }
 
 
