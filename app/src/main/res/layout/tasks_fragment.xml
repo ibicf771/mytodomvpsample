@@ -14,6 +14,7 @@
             android:id="@+id/add_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{tasksfragment.onAddButtonClick}"
             android:text="Add Item" />
 
         <android.support.v7.widget.RecyclerView

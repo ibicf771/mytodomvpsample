@@ -1,18 +1,25 @@
 package com.architecture.android.todo_mvp_sample.tasks;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.architecture.android.todo_mvp_sample.BR;
 import com.architecture.android.todo_mvp_sample.R;
 import com.architecture.android.todo_mvp_sample.data.Task;
+import com.architecture.android.todo_mvp_sample.databinding.TaskItemBinding;
+import com.architecture.android.todo_mvp_sample.databinding.TasksFragmentBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,9 +31,9 @@ import java.util.List;
 public class TasksFragment extends Fragment implements TasksContract.View{
 
     private TasksContract.Presenter mPresenter;
-    private Button mAddItemBtn;
-    private RecyclerView mRecycleView;
     private TasksAdapter mAdapter;
+
+    TasksFragmentBinding binding;
 
     private TasksFragment() {
         // Requires empty public constructor
@@ -46,11 +53,12 @@ public class TasksFragment extends Fragment implements TasksContract.View{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.tasks_fragment, container, false);
-        mAddItemBtn =  root.findViewById(R.id.add_item);
-        mRecycleView = root.findViewById(R.id.tasks_list);
+
+        binding = TasksFragmentBinding.inflate(inflater, container, false);
+        binding.setTasksfragment(TasksFragment.this);
         initView();
-        return root;
+
+        return binding.getRoot();
     }
 
 
@@ -60,18 +68,13 @@ public class TasksFragment extends Fragment implements TasksContract.View{
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mAdapter = new TasksAdapter(list, mOnDeleteItemListener);
         // 设置布局管理器
-        mRecycleView.setLayoutManager(mLayoutManager);
+        binding.tasksList.setLayoutManager(mLayoutManager);
         // 设置adapter
-        mRecycleView.setAdapter(mAdapter);
-        mAddItemBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPresenter.addItem();
-            }
-        });
+        binding.tasksList.setAdapter(mAdapter);
+
     }
 
-    public void onAddButtonClick(){
+    public void onAddButtonClick(View view){
         mPresenter.addItem();
     }
 
@@ -97,11 +100,12 @@ public class TasksFragment extends Fragment implements TasksContract.View{
         }
     };
 
-    private static class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
+    public static class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder>{
 
         private List<Task> mTasks ;
 
         private OnDeleteItemListener mOnDeleteItemListener;
+
 
         public TasksAdapter(List<Task> tasks, OnDeleteItemListener onDeleteItemListener){
             mTasks = tasks;
@@ -115,21 +119,35 @@ public class TasksFragment extends Fragment implements TasksContract.View{
 
         @Override
         public TasksAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.task_item, parent, false);
-            // 实例化viewholder
-            ViewHolder viewHolder = new ViewHolder(v);
-            return viewHolder;
+
+            ViewDataBinding binding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.getContext()),
+                    R.layout.task_item,
+                    parent,
+                    false);
+            ViewHolder holder = new ViewHolder(binding.getRoot());
+            return holder;
         }
 
         @Override
         public void onBindViewHolder(TasksAdapter.ViewHolder holder, final int position) {
-            holder.mTv.setText(mTasks.get(position).getData());
-            holder.mDeleteItem.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mOnDeleteItemListener.onItemDelete(mTasks.get(position));
-                }
-            });
+//            holder.mTv.setText(mTasks.get(position).getData());
+//            holder.mDeleteItem.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    mOnDeleteItemListener.onItemDelete(mTasks.get(position));
+//                }
+//            });
+
+            ((TaskItemBinding)holder.getBinding()).itemDelete.setTag(position);
+            holder.getBinding().setVariable(BR.itemdata,mTasks.get(position).getData());
+            holder.getBinding().setVariable(BR.tasksadapter, this);
+            holder.getBinding().executePendingBindings();
+        }
+
+        public void onDeleteBtnClick(View view){
+            mOnDeleteItemListener.onItemDelete(mTasks.get((int)view.getTag()));
+
         }
 
         @Override
@@ -139,24 +157,23 @@ public class TasksFragment extends Fragment implements TasksContract.View{
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
 
-            TextView mTv;
-
-            Button mDeleteItem;
-
+            private ViewDataBinding mBinding;
             public ViewHolder(View itemView) {
                 super(itemView);
-                mTv =  itemView.findViewById(R.id.item_data);
-                mDeleteItem = itemView.findViewById(R.id.item_delete);
+                mBinding = DataBindingUtil.bind(itemView);
+            }
+
+            public void setBinding(ViewDataBinding binding){
+                mBinding = binding;
+            }
+
+            public ViewDataBinding getBinding(){
+                return mBinding;
             }
         }
-
-
-
     }
 
     interface OnDeleteItemListener{
         void onItemDelete(Task task);
     }
-
-
 }
