@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by yangsimin on 2017/11/29.
  */
 
-public class TasksPresenter implements TasksContract.Presenter, TaskRepository.GetTasksCallback {
+public class TasksPresenter implements TasksContract.Presenter, TaskRepository.GetTasksCallback<Task> {
     private TaskDataSource mTaskDataSource;
     private TasksContract.View mView;
 
