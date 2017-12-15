@@ -5,6 +5,11 @@ import com.architecture.android.todo_mvp_sample.data.Task;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+
 /**
  * Created by yangsimin on 2017/11/29.
  */
@@ -25,13 +30,31 @@ public class TaskRepository implements TaskDataSource {
     private ArrayList<Task> mList = new ArrayList<>();
 
     @Override
-    public void addTask(Task task) {
-        mList.add(task);
+    public Observable addTask(final Task task) {
+        Observable observable = Observable.create(new ObservableOnSubscribe<Task>() {
+            @Override
+            public void subscribe(ObservableEmitter<Task> e) throws Exception {
+                mList.add(task);
+                e.onNext(task);
+            }
+        });
+//        mList.add(task);
+        return observable;
     }
 
     @Override
-    public void deleteTask(Task task) {
-        mList.remove(task);
+    public Observable deleteTask(final Task task) {
+//        mList.remove(task);
+//        return null;
+
+        Observable observable = Observable.create(new ObservableOnSubscribe<Task>() {
+            @Override
+            public void subscribe(ObservableEmitter<Task> e) throws Exception {
+                mList.remove(task);
+                e.onNext(task);
+            }
+        });
+        return observable;
     }
 
     @Override
