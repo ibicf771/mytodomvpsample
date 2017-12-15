@@ -10,17 +10,17 @@ import io.reactivex.Observable;
  * Created by yangsimin on 2017/11/29.
  */
 
-public interface TaskDataSource {
+public interface TaskDataSource<T> {
 
-    interface GetTasksCallback {
+    interface GetTasksCallback<T> {
 
-        void onTasksLoad(List<Task> tasks);
+        void onTasksLoad(List<T> tasks);
 
     }
 
-    Observable<Task> addTask(Task task);
+    Observable<T> addTask(T task);
 
-    Observable<Task> deleteTask(Task task);
+    Observable<T> deleteTask(T task);
 
     void getTasks(GetTasksCallback callback);
 }

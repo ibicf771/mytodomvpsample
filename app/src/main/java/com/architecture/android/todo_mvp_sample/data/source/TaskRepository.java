@@ -14,7 +14,7 @@ import io.reactivex.Observer;
  * Created by yangsimin on 2017/11/29.
  */
 
-public class TaskRepository implements TaskDataSource {
+public class TaskRepository implements TaskDataSource<Task> {
 
     private static TaskRepository instance;
 
@@ -38,14 +38,11 @@ public class TaskRepository implements TaskDataSource {
                 e.onNext(task);
             }
         });
-//        mList.add(task);
         return observable;
     }
 
     @Override
     public Observable deleteTask(final Task task) {
-//        mList.remove(task);
-//        return null;
 
         Observable observable = Observable.create(new ObservableOnSubscribe<Task>() {
             @Override
