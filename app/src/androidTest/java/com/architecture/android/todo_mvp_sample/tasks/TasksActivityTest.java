@@ -25,8 +25,7 @@ import static org.junit.Assert.*;
 /**
  * Created by yangsimin on 2018/3/29.
  */
-@RunWith(AndroidJUnit4.class)
-@LargeTest
+
 public class TasksActivityTest {
     @Rule
     public ActivityTestRule<TasksActivity> mStatisticsActivityTestRule =
@@ -42,7 +41,7 @@ public class TasksActivityTest {
     }
 
     @Test
-    public void Tasks_ShowsNonEmptyMessage() throws Exception {
+    public void testTaskActivity() throws Exception {
         // Check that the active and completed tasks text is displayed
         onView(withId(R.id.add_item)).check(matches(isDisplayed()));
         onView(withId(R.id.add_item)).perform(click());
